@@ -38,18 +38,18 @@ def includeme(config):
             raise ValueError("can't do this")
         configurator = pyramid.config.Configurator(registry=registry)
         config.add_route('_debug_toolbar_api.request.sqla_csv', '/_debug_toolbar_api/{request_id}/sqla.csv')
-        config.scan('pyramid_debugtoolbar_sqla_csv')
+        config.scan('pyramid_debugtoolbar_api_sqla')
         config.commit()
 
     Method C:
         config.add_route('_debug_toolbar_api.request.sqla_csv', '/_debug_toolbar_api/{request_id}/sqla.csv')
-        config.scan('pyramid_debugtoolbar_sqla_csv')
+        config.scan('pyramid_debugtoolbar_api_sqla')
         config.commit()
 
     """
     altconfig = config.with_package('pyramid_debugtoolbar')
     altconfig.add_route('_debug_toolbar_api.request.sqla_csv', '/_debug_toolbar_api/{request_id}/sqla.csv')
-    altconfig.scan('pyramid_debugtoolbar_sqla_csv')
+    altconfig.scan('pyramid_debugtoolbar_api_sqla')
     altconfig.commit()
 
 
