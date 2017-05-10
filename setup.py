@@ -15,7 +15,7 @@ setup(
     author="Jonathan Vanasco",
     author_email="jonathan@findmeon.com",
     url="https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy",
-    version="0.0.2",
+    version="0.1.0",
     description="sqlalchmey exporting for pyramid_debugtoolbar",
     keywords="web pyramid",
     license="MIT",
