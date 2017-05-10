@@ -37,7 +37,7 @@ class SqlalchemyCsvDebugPanel(DebugPanel):
         request = get_current_request()
         sqlalchemy_panel = get_sqlalchemy_panel(request.toolbar_panels.values())
         return sqlalchemy_panel
-    
+
     @property
     def has_content(self):
         sqlalchemy_panel = self._sqlalchemy_panel
@@ -54,10 +54,12 @@ class SqlalchemyCsvDebugPanel(DebugPanel):
 
     def render_content(self, request):
         sqlalchemy_panel = get_sqlalchemy_panel(request.toolbar_panels.values())
-        if not sqlalchemy_panel: 
+        if not sqlalchemy_panel:
             return 'No `sqlalchemy` panel in request.'
         if not sqlalchemy_panel.queries:
             return 'No queries in executed in request.'
+        # our template might want to reference this for button visibility
+        self.data = sqlalchemy_panel.data
         return super(SqlalchemyCsvDebugPanel, self).render_content(request)
 
     def render_vars(self, request):

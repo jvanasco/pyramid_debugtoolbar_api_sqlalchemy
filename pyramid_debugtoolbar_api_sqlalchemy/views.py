@@ -1,6 +1,5 @@
 # stdlib
 import csv
-import time
 import StringIO
 
 # pyramid
@@ -48,9 +47,9 @@ def queries_api_csv(request):
                             query['parameters'],
                             ))
     csvfile.seek(0)
-    as_csv = Response(content_type = 'text/csv',
-                      body_file = csvfile,
-                      status = 200,
+    as_csv = Response(content_type='text/csv',
+                      body_file=csvfile,
+                      status=200,
                       )
     as_csv.headers['Content-Disposition'] = str('attachment; filename= sqlalchemy-%s.csv' % request_id)
     return as_csv
