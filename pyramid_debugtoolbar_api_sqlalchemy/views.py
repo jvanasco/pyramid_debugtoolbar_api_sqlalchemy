@@ -18,8 +18,8 @@ from .utils import get_sqlalchemy_panel
 # ==============================================================================
 
 
-@view_config(route_name='debugtoolbar.sqlalchemy_api_csv')
-def sqlalchemy_api_csv(request):
+@view_config(route_name='debugtoolbar.api_sqlalchemy.queries.csv')
+def queries_api_csv(request):
 
     history = find_request_history(request)
     try:
