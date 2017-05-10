@@ -1,3 +1,9 @@
+v0.1.0
+2017.05.10
+* this works off the new pyramid_debutoolbar>=4.0 api.  no longer a dirty hack!
+* please use `debugtoolbar.includes`
+* changed the url for queries
+
 v0.0.2
 2014.12.16
 * fixed namings to `pyramid_debugtoolbar_api_sqla`

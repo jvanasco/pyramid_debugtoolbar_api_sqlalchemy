@@ -8,7 +8,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, "README.md")).read()
 README = README.split("\n\n", 1)[0] + "\n"
 
-requires = ['pyramid_debugtoolbar>=2.2', ]
+requires = ['pyramid_debugtoolbar>=4.0', ]
 
 setup(
     name="pyramid_debugtoolbar_api_sqla",

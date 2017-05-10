@@ -1,24 +1,42 @@
 pyramid_debugtoolbar_api_sqla
 =============================
 
-This allows for .csv output of sqlalchemy logging
+This allows for .csv output of sqlalchemy logging.
+This package can be useful as part of test suites, allowing developers to run a series of tests and log the SqlAlchemy performance.
 
-how to use this
-===============
+If you are using the debugtoolbar directly:
+
+* If SqlAlchemy queries exist on the request, a "SqlAlchemy CSV" tab will appear.  That will prompt you for queries.
+
+If you are scripting:
+
+* The urls are generated in a machine-friendly format, so you can regex the `request_id` off a page and pull it from the API.  this is explained below:
+
+
+NOTES:
+======
+
+This packages requires pyramid_debugtoolbar 4.0 or newer
+
+
+How to use this package
+=======================
 
 
 1. update your ENVIRONMENT.ini file
 
-	pyramid.includes = ... pyramid_debugtoolbar_api_sqla
+	debugtoolbar.includes = pyramid_debugtoolbar_api_sqla
 
-You MUST be using  pyramid_debugtoolbar with the SqlAlchemy panel enabled.  This just piggybacks on the existing module.
+You MUST be using `pyramid_debugtoolbar` with the SqlAlchemy panel enabled.  This just piggybacks on the existing module's work to log queries.
+
+You MUST use `debugtoolbar.includes`.  This will not work properly via `pyramid.includes`
 
 2. you can access a csv of the SqlAlchemy report via the following url hack:
 
-	url_html = '/_debug_toolbar/34343436383237303838'
-	url_api = '/_debug_toolbar_api/34343436383237303838/sqla.csv'
+	url_html = '/_debug_toolbar/{request_id}'
+	url_api =  '/_debug_toolbar/sqlalchemy-api/sqlalchemy-{request_id}.csv'
+	
+The file will be downloaded and offer a content-disposition as:
 
-notice these 2 changes on the url
+	sqlalchemy-{request_id}.csv
 
-* `/_debug_toolbar` -> `/_debug_toolbar_api`
-* `{request_id}` -> `{request_id}/sqla.csv`
