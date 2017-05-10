@@ -6,7 +6,6 @@ from pyramid.view import view_config
 
 # pyramid_debugtoolbar
 import pyramid_debugtoolbar
-from pyramid_debugtoolbar.views import valid_host, valid_request
 from pyramid_debugtoolbar.utils import find_request_history
 from pyramid_debugtoolbar.panels.sqla import SQLADebugPanel
 
@@ -59,7 +58,6 @@ def includeme(config):
 @view_config(
     route_name='_debug_toolbar_api.request.sqla_csv',
     permission=NO_PERMISSION_REQUIRED,
-    custom_predicates=(valid_host, valid_request)
 )
 def request_sqla_csv(request):
 
