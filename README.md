@@ -23,7 +23,7 @@ How to use this package
 =======================
 
 
-1. update your ENVIRONMENT.ini file
+Update your ENVIRONMENT.ini file
 
     debugtoolbar.includes = pyramid_debugtoolbar_api_sqlalchemy
 
@@ -31,7 +31,7 @@ You MUST be using `pyramid_debugtoolbar` with the SqlAlchemy panel enabled.  Thi
 
 You MUST use `debugtoolbar.includes`.  This will not work properly via `pyramid.includes`
 
-2. you can access a csv of the SqlAlchemy report via the following url hack:
+You can access a csv of the SqlAlchemy report via the following url hack:
 
     url_html = '/_debug_toolbar/{request_id}'
     url_api =  '/_debug_toolbar/api-sqlalchemy/sqlalchemy-{request_id}.csv'
