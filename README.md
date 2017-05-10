@@ -34,9 +34,14 @@ You MUST use `debugtoolbar.includes`.  This will not work properly via `pyramid.
 2. you can access a csv of the SqlAlchemy report via the following url hack:
 
 	url_html = '/_debug_toolbar/{request_id}'
-	url_api =  '/_debug_toolbar/sqlalchemy-api/sqlalchemy-{request_id}.csv'
+	url_api =  '/_debug_toolbar/api-sqlalchemy/sqlalchemy-{request_id}.csv'
 	
 The file will be downloaded and offer a content-disposition as:
 
 	sqlalchemy-{request_id}.csv
 
+The CSV columns are:
+
+* execution timing
+* sqlalchemy query
+* query params (json encoded)

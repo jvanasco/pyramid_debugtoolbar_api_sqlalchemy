@@ -16,7 +16,7 @@ def includeme(config):
     this keeps our routes from appearing in the debugtoolbar
     """
     config.registry.settings['debugtoolbar.extra_panels'].append(SqlalchemyCsvDebugPanel)
-    config.add_route('debugtoolbar.sqlalchemy_api_csv', '/sqlalchemy-api/sqlalchemy-{request_id}.csv')
+    config.add_route('debugtoolbar.sqlalchemy_api_csv', '/api-sqlalchemy/sqlalchemy-{request_id}.csv')
     config.scan('pyramid_debugtoolbar_api_sqlalchemy.views')
     config.commit()
 

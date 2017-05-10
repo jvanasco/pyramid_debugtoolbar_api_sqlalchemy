@@ -3,7 +3,7 @@
 </p>
 
 <p>
-	<a 	href="/_debug_toolbar/sqlalchemy-api/sqlalchemy-${pdtb_id}.csv"
+	<a 	href="/_debug_toolbar/api-sqlalchemy/sqlalchemy-${pdtb_id}.csv"
 	    class="btn btn-primary"
 	>
 		<span class="glyphicon glyphicon-download" aria-hidden="true"></span>
