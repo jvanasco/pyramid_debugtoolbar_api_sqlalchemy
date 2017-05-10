@@ -1,5 +1,5 @@
-pyramid_debugtoolbar_api_sqla
-=============================
+pyramid_debugtoolbar_api_sqlalchemy
+===================================
 
 This allows for .csv output of sqlalchemy logging.
 This package can be useful as part of test suites, allowing developers to run a series of tests and log the SqlAlchemy performance.
@@ -25,7 +25,7 @@ How to use this package
 
 1. update your ENVIRONMENT.ini file
 
-	debugtoolbar.includes = pyramid_debugtoolbar_api_sqla
+	debugtoolbar.includes = pyramid_debugtoolbar_api_sqlalchemy
 
 You MUST be using `pyramid_debugtoolbar` with the SqlAlchemy panel enabled.  This just piggybacks on the existing module's work to log queries.
 

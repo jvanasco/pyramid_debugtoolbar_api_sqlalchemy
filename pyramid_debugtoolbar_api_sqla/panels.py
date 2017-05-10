@@ -23,7 +23,7 @@ class SqlalchemyCsvDebugPanel(DebugPanel):
     Panel that displays a link to SQLACSV download
     """
     name = 'sqlalchemy-csv'
-    template = 'pyramid_debugtoolbar_api_sqla:templates/sqlalchemy_csv.dbtmako'
+    template = 'pyramid_debugtoolbar_api_sqlalchemy:templates/sqlalchemy_csv.dbtmako'
     title = _('SQLAlchemy Queries CSV')
     nav_title = _('SQLAlchemy CSV')
 

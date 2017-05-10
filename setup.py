@@ -1,4 +1,4 @@
-"""pyramid_debugtoolbar_api_sqla installation script.
+"""pyramid_debugtoolbar_api_sqlalchemy installation script.
 """
 import os
 from setuptools import setup
@@ -11,10 +11,10 @@ README = README.split("\n\n", 1)[0] + "\n"
 requires = ['pyramid_debugtoolbar>=4.0', ]
 
 setup(
-    name="pyramid_debugtoolbar_api_sqla",
+    name="pyramid_debugtoolbar_api_sqlalchemy",
     author="Jonathan Vanasco",
     author_email="jonathan@findmeon.com",
-    url="https://github.com/jvanasco/pyramid_debugtoolbar_api_sqla",
+    url="https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy",
     version="0.0.2",
     description="sqlalchmey exporting for pyramid_debugtoolbar",
     keywords="web pyramid",
