@@ -1,3 +1,8 @@
+v0.1.2
+2017.12.06
+* ported a functionality to current debugtoolbar api
+* store version as __VERSION__ in /__init__.py
+
 v0.1.1
 2017.05.10
 * changes after making a performance version of this panel
