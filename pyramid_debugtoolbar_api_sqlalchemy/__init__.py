@@ -2,7 +2,7 @@
 from .panels import SqlalchemyCsvDebugPanel
 
 
-__VERSION__ = '0.1.2'
+__VERSION__ = '0.2.0'
 
 
 # ==============================================================================

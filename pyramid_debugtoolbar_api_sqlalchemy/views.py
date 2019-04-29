@@ -1,11 +1,14 @@
 # stdlib
 import csv
-import StringIO
 
 # pyramid
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.exceptions import NotFound
+
+# pypi
+import six
+from six.moves import StringIO
 
 # lcoal
 from .utils import get_sqlalchemy_panel
@@ -36,7 +39,7 @@ def queries_api_csv(request):
     if not sqla_panel:
         raise NotFound
 
-    csvfile = StringIO.StringIO()
+    csvfile = StringIO()
     csvwriter = csv.writer(csvfile)
     for query in sqla_panel.data['queries']:
         csvwriter.writerow((query['duration'],
