@@ -2,7 +2,7 @@
 from .panels import SqlalchemyCsvDebugPanel
 
 
-__VERSION__ = '0.2.0'
+__VERSION__ = '0.2.1'
 
 
 # ==============================================================================
@@ -18,7 +18,7 @@ def includeme(config):
     now we are included within the debugtoolbar , so are under it's prefix (note the routing below)
     this keeps our routes from appearing in the debugtoolbar
     """
-    config.registry.settings['debugtoolbar.extra_panels'].append(SqlalchemyCsvDebugPanel)
+    config.add_debugtoolbar_panel(SqlalchemyCsvDebugPanel)
     config.add_route('debugtoolbar.api_sqlalchemy.queries.csv', '/api-sqlalchemy/sqlalchemy-{request_id}.csv')
     config.scan('pyramid_debugtoolbar_api_sqlalchemy.views')
     config.commit()
