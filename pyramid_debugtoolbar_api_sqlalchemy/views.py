@@ -17,7 +17,7 @@ from .utils import get_sqlalchemy_panel
 # ==============================================================================
 
 
-@view_config(route_name='debugtoolbar.api_sqlalchemy.queries.csv')
+@view_config(route_name="debugtoolbar.api_sqlalchemy.queries.csv")
 def queries_api_csv(request):
 
     history = request.pdtb_history
@@ -29,7 +29,7 @@ def queries_api_csv(request):
     else:
         last_request_id = last_request_pair[0]
 
-    request_id = request.matchdict.get('request_id', last_request_id)
+    request_id = request.matchdict.get("request_id", last_request_id)
     toolbar = history.get(request_id, None)
 
     if not toolbar:
@@ -41,15 +41,11 @@ def queries_api_csv(request):
 
     csvfile = StringIO()
     csvwriter = csv.writer(csvfile)
-    for query in sqla_panel.data['queries']:
-        csvwriter.writerow((query['duration'],
-                            query['raw_sql'],
-                            query['parameters'],
-                            ))
+    for query in sqla_panel.data["queries"]:
+        csvwriter.writerow((query["duration"], query["raw_sql"], query["parameters"]))
     csvfile.seek(0)
-    as_csv = Response(content_type='text/csv',
-                      body_file=csvfile,
-                      status=200,
-                      )
-    as_csv.headers['Content-Disposition'] = str('attachment; filename= sqlalchemy-%s.csv' % request_id)
+    as_csv = Response(content_type="text/csv", body_file=csvfile, status=200)
+    as_csv.headers["Content-Disposition"] = str(
+        "attachment; filename= sqlalchemy-%s.csv" % request_id
+    )
     return as_csv
