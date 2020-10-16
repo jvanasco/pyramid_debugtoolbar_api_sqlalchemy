@@ -12,13 +12,22 @@ with open(
         os.path.dirname(__file__), "pyramid_debugtoolbar_api_sqlalchemy", "__init__.py"
     )
 ) as v_file:
-    VERSION = re.compile(r".*__VERSION__ = '(.*?)'", re.S).match(v_file.read()).group(1)
+    VERSION = re.compile(r'.*__VERSION__ = "(.*?)"', re.S).match(v_file.read()).group(1)
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, "README.md")).read()
 README = README.split("\n\n", 1)[0] + "\n"
 
-requires = ["pyramid_debugtoolbar>=4.0", "six"]
+requires = [
+    "pyramid_debugtoolbar>=4.0",
+    "six",
+    "sqlalchemy",
+]
+tests_require = [
+    "pytest",
+    "pyramid",
+]
+testing_extras = tests_require + []
 
 setup(
     name="pyramid_debugtoolbar_api_sqlalchemy",
@@ -42,5 +51,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=requires,
+    tests_require=tests_require,
+    extras_require={
+        "testing": testing_extras,
+    },
     test_suite="tests",
 )

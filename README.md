@@ -1,6 +1,8 @@
 pyramid_debugtoolbar_api_sqlalchemy
 ===================================
 
+Build Status: ![Python package](https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy/workflows/Python%20package/badge.svg)
+
 This allows for .csv output of sqlalchemy logging.
 This package can be useful as part of test suites, allowing developers to run a series of tests and log the SqlAlchemy performance.
 
