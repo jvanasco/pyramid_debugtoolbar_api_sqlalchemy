@@ -16,7 +16,9 @@ import os
 from .utils import get_sqlalchemy_panel
 
 
-ENCODING = os.environ.get("pyramid_debugtoolbar_api_sqlalchemy_ecnoding", "utf-8")
+# encoding used to write filedata
+ENCODING = os.environ.get("pyramid_debugtoolbar_api_sqlalchemy_encoding", "utf-8")
+
 
 # ==============================================================================
 
