@@ -19,13 +19,13 @@ README = open(os.path.join(here, "README.md")).read()
 README = README.split("\n\n", 1)[0] + "\n"
 
 requires = [
+    "pyramid",
     "pyramid_debugtoolbar>=4.0",
     "six",
     "sqlalchemy",
 ]
 tests_require = [
     "pytest",
-    "pyramid",
 ]
 testing_extras = tests_require + []
 

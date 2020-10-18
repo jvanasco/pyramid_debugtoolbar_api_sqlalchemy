@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -82,6 +83,20 @@ class TestDebugtoolbarPanel_HasSqlAlchemy(unittest.TestCase):
             engine = sqlalchemy.create_engine("sqlite://")
             conn = engine.connect()
             result = conn.execute(sqlalchemy.sql.text("SELECT NULL;"))
+            # toss in another select statement with a unicode party hat
+            result = conn.execute(sqlalchemy.sql.text("SELECT NULL; -- 🎉"))
+            # make sure we encode bindparams correctly
+            stmt = sqlalchemy.sql.text(
+                "SELECT NULL = :party_hat or :int or :float or :text or :bool;"
+            )
+            stmt = stmt.bindparams(
+                party_hat="🎉",
+                int=1,
+                float=1.0,
+                text="text",
+                bool=False,
+            )
+            result = conn.execute(stmt)
             return Response(
                 "<html><head></head><body>OK</body></html>", content_type="text/html"
             )
