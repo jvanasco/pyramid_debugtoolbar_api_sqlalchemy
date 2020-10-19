@@ -15,7 +15,7 @@ with open(
     VERSION = re.compile(r'.*__VERSION__ = "(.*?)"', re.S).match(v_file.read()).group(1)
 
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, "README.md")).read()
+README = open(os.path.join(here, "README.rst")).read()
 README = README.split("\n\n", 1)[0] + "\n"
 
 requires = [

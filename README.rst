@@ -1,10 +1,11 @@
 pyramid_debugtoolbar_api_sqlalchemy
 ===================================
 
-Build Status: ![Python package](https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy/workflows/Python%20package/badge.svg)
+.. image:: https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy/workflows/Python%20package/badge.svg
+        :alt: Build Status
 
-This package extends the existing `pyramid_debugtoolbar` SQLAlchemy Panel to
-support downloadable CSV files of profiling data.
+`pyramid_debugtoolbar_api_sqlalchemy` extends the existing `pyramid_debugtoolbar`
+SQLAlchemy Panel to support downloadable CSV files of profiling data.
 
 This package does not replace the default panel, and requires it to be active.
 
@@ -35,6 +36,8 @@ How to use this package
 
 Update your ENVIRONMENT.ini file
 
+.. code-block:: python
+
     debugtoolbar.includes = pyramid_debugtoolbar_api_sqlalchemy
 
 You MUST be using `pyramid_debugtoolbar` with the SQLAlchemy panel enabled.
@@ -43,6 +46,8 @@ This just piggybacks on the existing module's work to log queries.
 You MUST use `debugtoolbar.includes`.  This will not work properly via `pyramid.includes`
 
 You can access a csv of the SQLAlchemy report via the following url hack:
+
+.. code-block:: python
 
     url_html = '/_debug_toolbar/{request_id}'
     url_api =  '/_debug_toolbar/api-sqlalchemy/sqlalchemy-{request_id}.csv'
@@ -65,8 +70,6 @@ By default, this package writes CSV files using "UTF-8" encoding.
 
 To change this, use the environment variable `pyramid_debugtoolbar_api_sqlalchemy_encoding`
 
+.. code-block:: shell
+
 	export pyramid_debugtoolbar_api_sqlalchemy_encoding=ascii
-
-
-
-
