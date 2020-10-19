@@ -8,7 +8,9 @@ from pyramid.exceptions import NotFound
 
 # pypi
 import six
-from six import BytesIO, StringIO
+
+# from six import BytesIO
+from six import StringIO
 
 import os
 
@@ -54,10 +56,9 @@ def queries_api_csv(request):
             (query["duration"], query["raw_sql"].encode(ENCODING), query["parameters"])
         )
     csvfile.seek(0)
-    if six.PY3:
-        csvfile = BytesIO(csvfile.read().encode(ENCODING))
-        csvfile.seek(0)
-    as_csv = Response(content_type="text/csv", body_file=csvfile, status=200)
+    as_csv = Response(
+        content_type="text/csv", body=csvfile.read(), status=200, charset=ENCODING
+    )
     as_csv.headers["Content-Disposition"] = str(
         "attachment; filename= sqlalchemy-%s.csv" % request_id
     )
