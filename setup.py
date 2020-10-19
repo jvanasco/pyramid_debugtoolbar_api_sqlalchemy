@@ -16,7 +16,6 @@ with open(
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, "README.rst")).read()
-README = README.split("\n\n", 1)[0] + "\n"
 
 requires = [
     "pyramid",
@@ -35,8 +34,9 @@ setup(
     author_email="jonathan@findmeon.com",
     url="https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy",
     version=VERSION,
-    description="SqlAlchemy exporting for pyramid_debugtoolbar",
-    keywords="web pyramid",
+    description="SQLAlchemy CSV exporting for pyramid_debugtoolbar",
+    long_description=README,
+    keywords="web pyramid sqlalchemy",
     license="MIT",
     classifiers=[
         "Intended Audience :: Developers",
@@ -46,7 +46,6 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
     ],
-    long_description=README,
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
