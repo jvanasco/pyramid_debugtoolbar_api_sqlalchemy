@@ -1,21 +1,21 @@
 """pyramid_debugtoolbar_api_sqlalchemy installation script.
 """
 import os
+import re
 from setuptools import setup
 from setuptools import find_packages
 
 # store version in the init.py
-import re
+HERE = os.path.abspath(os.path.dirname(__file__))
 
 with open(
-    os.path.join(
-        os.path.dirname(__file__), "pyramid_debugtoolbar_api_sqlalchemy", "__init__.py"
-    )
+    os.path.join(HERE, "pyramid_debugtoolbar_api_sqlalchemy", "__init__.py")
 ) as v_file:
     VERSION = re.compile(r'.*__VERSION__ = "(.*?)"', re.S).match(v_file.read()).group(1)
 
-here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, "README.rst")).read()
+long_description = description = "SQLAlchemy CSV exporting for pyramid_debugtoolbar"
+with open(os.path.join(HERE, "README.rst")) as fp:
+    long_description = fp.read()
 
 requires = [
     "pyramid",
@@ -34,8 +34,8 @@ setup(
     author_email="jonathan@findmeon.com",
     url="https://github.com/jvanasco/pyramid_debugtoolbar_api_sqlalchemy",
     version=VERSION,
-    description="SQLAlchemy CSV exporting for pyramid_debugtoolbar",
-    long_description=README,
+    description=description,
+    long_description=long_description,
     keywords="web pyramid sqlalchemy",
     license="MIT",
     classifiers=[
