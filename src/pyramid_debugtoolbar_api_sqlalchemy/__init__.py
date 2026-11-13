@@ -1,8 +1,4 @@
-# local
-from .panels import SqlalchemyCsvDebugPanel
-
-
-__VERSION__ = "0.3.1"
+from ._version import __VERSION__
 
 
 # ==============================================================================
@@ -16,6 +12,9 @@ def includeme(config):
 
         debugtoolbar.includes = pyramid_debugtoolbar_api_sqlalchemy
     """
+    # Legacy setuptools imports this package to discover the version.
+    from .panels import SqlalchemyCsvDebugPanel
+
     config.add_debugtoolbar_panel(SqlalchemyCsvDebugPanel)
     config.add_route(
         "debugtoolbar.api_sqlalchemy.queries.csv",

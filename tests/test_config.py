@@ -109,6 +109,7 @@ class TestDebugtoolbarPanel_HasSqlAlchemy(unittest.TestCase):
         self.settings = config.registry.settings
 
         config.add_view(view_has_sqlalchemy)
+        config.add_notfound_view(lambda request: Response(status=404))
 
     def tearDown(self):
         testing.tearDown()
@@ -154,3 +155,21 @@ class TestDebugtoolbarPanel_HasSqlAlchemy(unittest.TestCase):
         resp3 = req3.get_response(app)
         self.assertEqual(resp3.status_code, 200)
         self.assertIn("SELECT NULL;", resp3.text)
+        self.assertIn("SELECT NULL; -- 🎉", resp3.text)
+        self.assertEqual(
+            resp3.headers["Content-Disposition"],
+            'attachment; filename="sqlalchemy-%s.csv"' % _id,
+        )
+        self.assertTrue(resp3.cache_control.no_store)
+
+        denied = Request.blank(_csv_link)
+        denied.remote_addr = "192.0.2.1"
+        self.assertEqual(denied.get_response(app).status_code, 404)
+
+    def test_csv_missing_history(self):
+        # type: () -> None
+        """Return 404 for a request absent from toolbar history."""
+        app = self.config.make_wsgi_app()
+        request = Request.blank("/_debug_toolbar/api-sqlalchemy/sqlalchemy-missing.csv")
+        request.remote_addr = "127.0.0.1"
+        self.assertEqual(request.get_response(app).status_code, 404)

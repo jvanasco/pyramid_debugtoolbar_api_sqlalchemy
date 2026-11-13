@@ -1,4 +1,6 @@
 v1.0.0
+* Harden CSV download headers and preserve Unicode SQL in Python 3 exports.
+* Consolidate packaging and tox settings and extend CI through Python 3.15.
 * add tests/__init__.py
 
 v0.3.1
