@@ -1,65 +1,60 @@
-# stdlib
 import csv
+import os
+import re
 
-# pyramid
+from pyramid.exceptions import NotFound
+from pyramid.request import Request
 from pyramid.response import Response
 from pyramid.view import view_config
-from pyramid.exceptions import NotFound
+from six import PY2, StringIO, binary_type, text_type
 
-# pypi
-import six
-
-# from six import BytesIO
-from six import StringIO
-
-import os
-
-# lcoal
+from .spreadsheet_utils import sanitize_spreadsheet_cell
 from .utils import get_sqlalchemy_panel
 
 
-# encoding used to write filedata
 ENCODING = os.environ.get("pyramid_debugtoolbar_api_sqlalchemy_encoding", "utf-8")
-
-
-# ==============================================================================
 
 
 @view_config(route_name="debugtoolbar.api_sqlalchemy.queries.csv")
 def queries_api_csv(request):
-
-    history = request.pdtb_history
-    try:
-        last_request_pair = history.last(1)[0]
-    except IndexError:
-        last_request_pair = None
-        last_request_id = None
-    else:
-        last_request_id = last_request_pair[0]
-
-    request_id = request.matchdict.get("request_id", last_request_id)
-    toolbar = history.get(request_id, None)
-
-    if not toolbar:
+    # type: (Request) -> Response
+    """Export the recorded SQL queries for the requested toolbar entry."""
+    request_id = request.matchdict["request_id"]
+    toolbar = request.pdtb_history.get(request_id, None)
+    if toolbar is None:
         raise NotFound
 
-    sqla_panel = get_sqlalchemy_panel(toolbar.panels)
-    if not sqla_panel:
+    panel = get_sqlalchemy_panel(toolbar.panels)
+    if panel is None:
         raise NotFound
 
+    spreadsheet = request.GET.get("spreadsheet") == "1"
     csvfile = StringIO()
-    csvwriter = csv.writer(csvfile)
-    for query in sqla_panel.data["queries"]:
-        # we need to encode the query in Python2 if we use StringIO
-        # we need to encode them in Python3 if we use BytesIO
-        csvwriter.writerow(
-            (query["duration"], query["raw_sql"].encode(ENCODING), query["parameters"])
-        )
-    csvfile.seek(0)
-    as_csv = Response(
-        content_type="text/csv", body=csvfile.read(), status=200, charset=ENCODING
+    writer = csv.writer(csvfile)
+    for query in panel.data.get("queries", ()):
+        sql = query["raw_sql"]
+        parameters = query["parameters"]
+        if spreadsheet:
+            sql = sanitize_spreadsheet_cell(sql)
+            if parameters is not None:
+                if isinstance(parameters, binary_type):
+                    parameters = parameters.decode(ENCODING, "replace")
+                else:
+                    parameters = text_type(parameters)
+                parameters = sanitize_spreadsheet_cell(parameters)
+                if PY2:
+                    parameters = parameters.encode(ENCODING)
+        if PY2:
+            sql = sql.encode(ENCODING)
+        writer.writerow((query["duration"], sql, parameters))
+
+    response = Response(
+        content_type="text/csv", body=csvfile.getvalue(), charset=ENCODING
     )
-    as_csv.headers["Content-Disposition"] = str(
-        "attachment; filename= sqlalchemy-%s.csv" % request_id
+    safe_id = re.sub(r"[^a-zA-Z0-9_-]", "_", request_id)
+    suffix = "-spreadsheet" if spreadsheet else ""
+    response.headers["Content-Disposition"] = str(
+        'attachment; filename="sqlalchemy-%s%s.csv"' % (safe_id, suffix)
     )
-    return as_csv
+    response.cache_control.no_store = True
+    return response
