@@ -82,7 +82,7 @@ class TestDebugtoolbarPanel_HasSqlAlchemy(unittest.TestCase):
 
             engine = sqlalchemy.create_engine("sqlite://")
             conn = engine.connect()
-            result = conn.execute(sqlalchemy.sql.text("SELECT NULL;"))
+            result = conn.execute(sqlalchemy.sql.text("-- CSV marker\nSELECT NULL;"))
             # toss in another select statement with a unicode party hat
             result = conn.execute(sqlalchemy.sql.text("SELECT NULL; -- 🎉"))
             # make sure we encode bindparams correctly
@@ -161,6 +161,15 @@ class TestDebugtoolbarPanel_HasSqlAlchemy(unittest.TestCase):
             'attachment; filename="sqlalchemy-%s.csv"' % _id,
         )
         self.assertTrue(resp3.cache_control.no_store)
+        spreadsheet = Request.blank(_csv_link + "?spreadsheet=1")
+        spreadsheet.remote_addr = "127.0.0.1"
+        exported = spreadsheet.get_response(app)
+        self.assertEqual(exported.status_code, 200)
+        self.assertTrue(exported.cache_control.no_store)
+        self.assertIn("-spreadsheet.csv", exported.headers["Content-Disposition"])
+        self.assertIn(',"-- CSV marker', resp3.text)
+        self.assertIn(",\"'-- CSV marker", exported.text)
+        self.assertIn("SELECT NULL; -- 🎉", exported.text)
 
         denied = Request.blank(_csv_link)
         denied.remote_addr = "192.0.2.1"
@@ -173,3 +182,16 @@ class TestDebugtoolbarPanel_HasSqlAlchemy(unittest.TestCase):
         request = Request.blank("/_debug_toolbar/api-sqlalchemy/sqlalchemy-missing.csv")
         request.remote_addr = "127.0.0.1"
         self.assertEqual(request.get_response(app).status_code, 404)
+
+
+class TestSpreadsheetCell(unittest.TestCase):
+    def test_formula_like_text(self):
+        """Prefix formula-like text while preserving ordinary SQL."""
+        from pyramid_debugtoolbar_api_sqlalchemy.spreadsheet_utils import (
+            sanitize_spreadsheet_cell,
+        )
+
+        for value in ("=1", " +1", "-1", "@x", "\ttext", "\rtext", "\ntext", "\uff1d1"):
+            self.assertEqual(sanitize_spreadsheet_cell(value), "'" + value)
+        for value in ("", "SELECT 1", 'SELECT "a,b"'):
+            self.assertEqual(sanitize_spreadsheet_cell(value), value)

@@ -1,3 +1,3 @@
 """Package version shared by runtime and build metadata."""
 
-__VERSION__ = "0.3.1"
+__VERSION__ = "1.0.0"
