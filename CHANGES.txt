@@ -1,4 +1,4 @@
-unreleased
+v1.0.0
 * add tests/__init__.py
 
 v0.3.1
@@ -13,39 +13,32 @@ v0.3.0
 * migrated README to rst
 
 
-v0.2.1
-2019.05.01
+v0.2.1 | 2019.05.01
 includeme registers the panel via the api method `config.add_debugtoolbar_panel()`
 
-v0.2.0
-2019.04.29
+v0.2.0 | 2019.04.29
 * python3 support
 
-v0.1.2
-2017.12.06
+v0.1.2 | 2017.12.06
 * ported a functionality to current debugtoolbar api
 * store version as __VERSION__ in /__init__.py
 
-v0.1.1
-2017.05.10
+v0.1.1 | 2017.05.10
 * changes after making a performance version of this panel
 * renamed the route
 * making data visible to the template
 * packaging fix, the templates weren't distributing
 
-v0.1.0
-2017.05.10
+v0.1.0 | 2017.05.10
 * this works off the new pyramid_debutoolbar>=4.0 api.  no longer a dirty hack!
 * please use `debugtoolbar.includes`
 * changed the url for queries
 * renamed to pyramid_debugtoolbar_api_sqlalchemy
 
-v0.0.2
-2014.12.16
+v0.0.2 | 2014.12.16
 * fixed namings to `pyramid_debugtoolbar_api_sqla`
 
-v0.0.1
-2014.12.16
+v0.0.1 | 2014.12.16
 * initial import
 
 
